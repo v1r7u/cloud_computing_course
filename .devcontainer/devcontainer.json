@@ -1,0 +1,17 @@
+{
+    "name": "Cloud Computing demo environment",
+    "dockerFile": "Dockerfile",
+
+    "settings": {
+      "terminal.integrated.profiles.linux": {
+        "bash": {
+          "path": "/bin/bash"
+        }
+      }
+    },
+  "extensions": [
+    "hashicorp.terraform",
+    "ms-python.python",
+    "hediet.vscode-drawio"
+  ]
+}

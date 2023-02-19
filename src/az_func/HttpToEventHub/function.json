@@ -1,0 +1,21 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "type": "eventHub",
+      "name": "$return",
+      "eventHubName": "%eventHubName%",
+      "connection": "CloudComputingEventHubConnectionString",
+      "direction": "out"
+    }
+  ]
+}
