@@ -1,17 +1,25 @@
 {
-    "name": "Cloud Computing demo environment",
-    "dockerFile": "Dockerfile",
+  "name": "Cloud Computing demo environment",
+  "dockerFile": "Dockerfile",
 
-    "settings": {
-      "terminal.integrated.profiles.linux": {
-        "bash": {
-          "path": "/bin/bash"
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": { }
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash"
+          }
         }
-      }
-    },
-  "extensions": [
-    "hashicorp.terraform",
-    "ms-python.python",
-    "hediet.vscode-drawio"
-  ]
+      },
+      "extensions": [
+        "hashicorp.terraform",
+        "ms-python.python",
+        "hediet.vscode-drawio"
+      ]
+    }
+  }
 }

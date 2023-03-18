@@ -1,6 +1,6 @@
 # Homeworks
 
-The course has ten homeworks that gradually build a single project composed of several cloud services:
+The course has several homeworks that gradually build a single project composed of several cloud services:
 - Event Stream
 - Object Store
 - Database
