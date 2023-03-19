@@ -32,7 +32,7 @@ RUN apt-get -y install \
 # More details: https://github.com/Azure/azure-functions-core-tools/issues/2554
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-ARG TERRAFORM_VERSION=1.1.8
+ARG TERRAFORM_VERSION=1.4.2
 RUN curl -O https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin/ && \
     rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \

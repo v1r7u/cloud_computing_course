@@ -1,9 +1,9 @@
 terraform {
-  required_version = "1.1.8"
+  required_version = "~>1.4.0"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.1.0"
+      version = "~>3.48.0"
     }
   }
 }
@@ -26,8 +26,8 @@ module "storage_account" {
   location = var.location
 }
 
-module "faas_eh_sa" {
-  source = "../modules/faas_eh_sa"
+module "faas" {
+  source = "../modules/faas"
 
   prefix   = var.prefix
   location = var.location

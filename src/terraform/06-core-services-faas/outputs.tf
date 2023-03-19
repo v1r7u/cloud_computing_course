@@ -3,13 +3,13 @@ output "azure_web_jobs_storage" {
   sensitive = true
 }
 
-output "event_hub_name" {
-  value = module.faas.event_hub_name
+output "events_topic_endpoint" {
+  value = module.faas.events_topic_endpoint
   sensitive = true
 }
 
-output "event_hub_connection_string" {
-  value = module.faas.event_hub_connection_string
+output "events_topic_key" {
+  value = module.faas.events_topic_key
   sensitive = true
 }
 
@@ -18,8 +18,8 @@ output "storage_account_connection_string" {
   sensitive = true
 }
 
-output "storage_account_containername" {
-  value = module.faas.storage_account_containername
+output "storage_account_tablename" {
+  value = module.faas.storage_account_tablename
   sensitive = true
 }
 

@@ -23,10 +23,10 @@ terraform apply
 
 ```sh
 export AzureWebJobsStorage=$(terraform output -raw azure_web_jobs_storage)
-export eventHubName=$(terraform output -raw event_hub_name)
-export CloudComputingEventHubConnectionString=$(terraform output -raw event_hub_connection_string)
+export eventsTopicEndpoint=$(terraform output -raw events_topic_endpoint)
+export eventsTopicKey=$(terraform output -raw events_topic_key)
 export StorageAccountConnectionString=$(terraform output -raw storage_account_connection_string)
-export StorageAccountContainerName=$(terraform output -raw storage_account_containername)
+export storageAccountTableName=$(terraform output -raw storage_account_tablename)
 export FUNCTION_APP_NAME=$(terraform output -raw azure_function_name)
 ```
 

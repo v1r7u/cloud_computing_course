@@ -1,4 +1,5 @@
 # Do not include azure-functions-worker as it may conflict with the Azure Functions platform
 
+azure-core
+azure-eventgrid
 azure-functions
-azure-storage-blob
