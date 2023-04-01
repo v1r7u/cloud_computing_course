@@ -5,8 +5,8 @@ locals {
   }
 }
 
-resource "azurerm_resource_group" "faas_eh_sa" {
-  name     = "${var.prefix}-faas-eh-sa-rg"
+resource "azurerm_resource_group" "faas" {
+  name     = "${var.prefix}-faas-rg"
   location = var.location
 
   tags = local.common_tags

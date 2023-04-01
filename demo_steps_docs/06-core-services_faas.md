@@ -27,10 +27,10 @@ terraform apply
 
 ```sh
 export AzureWebJobsStorage=$(terraform output -raw azure_web_jobs_storage)
-export eventHubName=$(terraform output -raw event_hub_name)
-export CloudComputingEventHubConnectionString=$(terraform output -raw event_hub_connection_string)
+export eventGridTopicEndpoint=$(terraform output -raw events_topic_endpoint)
+export eventGridTopicKey=$(terraform output -raw events_topic_key)
 export StorageAccountConnectionString=$(terraform output -raw storage_account_connection_string)
-export StorageAccountContainerName=$(terraform output -raw storage_account_containername)
+export storageAccountTableName=$(terraform output -raw storage_account_tablename)
 export FUNCTION_APP_NAME=$(terraform output -raw azure_function_name)
 ```
 
@@ -44,13 +44,14 @@ export FUNCTION_APP_NAME=$(terraform output -raw azure_function_name)
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+func init
 ```
 
 3. Run locally
 
     1. Run the application: `func start --python`.
 
-    2. Insert events **from another terminal**: `echo $(date) | xargs -I{} curl -d '{"name":"the first", "time":"{}"}' -X POST http://localhost:7071/api/HttpToEventHub`.
+    2. Insert events **from another terminal**: `echo $(date) | xargs -I{} curl -d '{"name":"the first", "time":"{}"}' -X POST http://localhost:7071/api/HttpToEventGrid`.
 
 4. Deploy function to Azure: `func azure functionapp publish $FUNCTION_APP_NAME --python`. Note, it takes _some time_ to finish the process.
 
@@ -61,7 +62,7 @@ pip install -r requirements.txt
 func azure functionapp list-functions $FUNCTION_APP_NAME --show-keys
 
 # Get function URL from previous command or from Code+Test view, for example:
-FUNCTION_URL=https://cloud22-mra8-func.azurewebsites.net/api/httptoeventhub?code=z3xyJuNGGuPzZBfS9mH0YGz3pnAke4ydiPPk3mg_EFT1AzFuWHC-FQ==
+FUNCTION_URL=https://cloud23-huvn-func.azurewebsites.net/api/httptoeventgrid?code=pkyeU6XDc5GH8Ig6EEcPolpkuTP447c8jG7hd8_u3Nc6AzFuiiTtjQ==
 echo $(date) | xargs -I{} curl -d '{"name":"the first", "time":"{}"}' -X POST $FUNCTION_URL
 ```
 

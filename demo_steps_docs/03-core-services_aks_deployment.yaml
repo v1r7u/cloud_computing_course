@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: my-dep
   name: my-dep
 spec:
   replicas: 3
@@ -14,12 +12,16 @@ spec:
       labels:
         app: my-dep
     spec:
-      nodeSelector:
-        autoscaled: "true"
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - my-dep
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - image: nginx
         name: nginx
-        resources:
-          requests:
-            cpu: 700m
-            memory: 1Gi

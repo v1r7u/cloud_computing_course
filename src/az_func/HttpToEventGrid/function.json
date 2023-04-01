@@ -11,11 +11,9 @@
       ]
     },
     {
-      "type": "eventHub",
-      "name": "$return",
-      "eventHubName": "%eventHubName%",
-      "connection": "CloudComputingEventHubConnectionString",
-      "direction": "out"
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
     }
   ]
 }

@@ -4,6 +4,7 @@ locals {
     project   = "cloud-computing-course"
   }
 }
+
 resource "azurerm_resource_group" "sa" {
   name     = "${var.prefix}-sa-rg"
   location = var.location

@@ -3,13 +3,13 @@ output "azure_web_jobs_storage" {
   sensitive = true
 }
 
-output "event_hub_name" { 
-  value = azurerm_eventhub.eh_raw.name
+output "events_topic_endpoint" { 
+  value = azurerm_eventgrid_topic.events.endpoint
   sensitive = true
 }
 
-output "event_hub_connection_string" { 
-  value = azurerm_eventhub_namespace.ehn.default_primary_connection_string
+output "events_topic_key" { 
+  value = azurerm_eventgrid_topic.events.primary_access_key
   sensitive = true
 }
 
@@ -18,8 +18,8 @@ output "storage_account_connection_string" {
   sensitive = true
 }
 
-output "storage_account_containername" { 
-  value = azurerm_storage_container.events.name
+output "storage_account_tablename" { 
+  value = azurerm_storage_table.events.name
   sensitive = true
 }
 
