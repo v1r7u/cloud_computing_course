@@ -10,7 +10,6 @@
       "name": "message",
       "type": "table",
       "tableName": "%storageAccountTableName%",
-      "partitionKey": "event",
       "connection": "StorageAccountConnectionString",
       "direction": "out"
     }

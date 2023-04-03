@@ -44,7 +44,6 @@ export FUNCTION_APP_NAME=$(terraform output -raw azure_function_name)
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-func init
 ```
 
 3. Run locally
