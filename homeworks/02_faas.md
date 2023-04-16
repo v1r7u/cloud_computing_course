@@ -16,7 +16,7 @@ You have to implement two Functions:
 
 ### Deliveries
 
-- Reference to git repository with project sources.
+- Reference to git repository with FaaS project sources (e.g. functions code and/or configuration files).
 - Cloud web-interface screenshots to prove function successful invocation:
     - function invocation logs from cloud interface.
     - created files in Object Store.
