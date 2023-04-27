@@ -19,7 +19,7 @@ Disclaimer: the following section give only a brief introduction into the topics
 4. One of popular _scanners_ is [trivy](https://github.com/aquasecurity/trivy). You can install it to your machine or run inside a container, for example:
 
     ```sh
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.28.0 image python:3.9
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image python:3.9
     ```
 
     Discalimer: there are a lot of other free and commercial scanners: [Clair](https://github.com/quay/clair), [anchore/grype](https://github.com/anchore/grype), [snyk](https://snyk.io/product/container-vulnerability-management/) to name a few.
@@ -29,12 +29,12 @@ Disclaimer: the following section give only a brief introduction into the topics
 5. You can include image-scanning as gate before pushing an image to Container Registry. thus, if container has a known vulnerability - image is not released:
 
     ```sh
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.28.0 image --exit-code 1 --no-progress python:3.9
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9
 
     # get exit-code of last command
     echo $?
 
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.28.0 image --exit-code 1 --no-progress alpine:latest
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress alpine:latest
 
     echo $?
     ```
@@ -45,7 +45,7 @@ Disclaimer: the following section give only a brief introduction into the topics
 
     ```sh
     ### buster
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.28.0 image --exit-code 1 --no-progress python:3.9
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9
 
     python:3.9 (debian 10.9)
     ========================
@@ -54,7 +54,7 @@ Disclaimer: the following section give only a brief introduction into the topics
 
     ```sh
     ### buster-slim
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.28.0 image --exit-code 1 --no-progress python:3.9-slim
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9-slim
 
     python:3.9-slim (debian 10.9)
     =============================
@@ -63,7 +63,7 @@ Disclaimer: the following section give only a brief introduction into the topics
 
     ```sh
     ### alpine
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.28.0 image --exit-code 1 --no-progress python:3.9-alpine
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9-alpine
 
     python:3.9-alpine (alpine 3.13.5)
     =================================
@@ -90,12 +90,13 @@ Disclaimer: the following section give only a brief introduction into the topics
 
 4. Regularly patch your dependencies and run scanners, like `trivy` above.
 
-5. Sign your [commits](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work), [container images](https://docs.docker.com/engine/security/trust/).
+5. Sign your [commits](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work), [container images](https://docs.docker.com/engine/security/trust/) (or with [cosign](https://docs.sigstore.dev/cosign/signing_with_containers/)).
 
 6. Verify signatures. For example:
 
     - Github can require signed commits;
     - Container Runtime can _trust_ only particular keys;
+    - or you can verify signed container images localy: https://docs.sigstore.dev/cosign/verify/
 
 7. Protect access to your _build_ tools.
 
@@ -131,3 +132,4 @@ Disclaimer: the following section give only a brief introduction into the topics
 - [How to Spoof Any User on Github…and What to Do to Prevent It](https://blog.gruntwork.io/how-to-spoof-any-user-on-github-and-what-to-do-to-prevent-it-e237e95b8deb).
 - [Supply chain attacks](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/supply-chain-malware) article by Microsoft.
 - [Open source maintainer pulls the plug on npm packages colors and faker](https://snyk.io/blog/open-source-npm-packages-colors-faker/)
+- [Alpine is evil](https://martinheinz.dev/blog/92), try [chainguard](https://github.com/chainguard-images)

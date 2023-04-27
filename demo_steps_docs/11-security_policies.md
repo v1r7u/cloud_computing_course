@@ -24,5 +24,5 @@ The goal: introduction into policies management
 
 ```sh
 ABSOLUTE_PATH_TO_TF=/home/cloudcomp/cloud_computing_course/src/terraform
-docker run --volume $ABSOLUTE_PATH_TO_TF:/tf bridgecrew/checkov:2.0.1161 --quiet --compact --directory /tf
+docker run --volume $ABSOLUTE_PATH_TO_TF:/tf bridgecrew/checkov:2.3.199 --quiet --compact --directory /tf
 ```

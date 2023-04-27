@@ -2,7 +2,7 @@
 
 **The goal**: find CVEs in real docker image.
 
-Scan image ***TBD*** with [grype](https://github.com/anchore/grype) and [trivy](https://github.com/aquasecurity/trivy) only for fixed HIGH and CRITICAL vulnerabilities.
+Scan image `ghcr.io/mlflow/mlflow:v2.3.0` with [grype](https://github.com/anchore/grype) and [trivy](https://github.com/aquasecurity/trivy) only for fixed HIGH and CRITICAL vulnerabilities.
 
 ### Deliveries
 
