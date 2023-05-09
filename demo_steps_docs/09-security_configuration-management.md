@@ -133,3 +133,4 @@ Disclaimer: the following section give only a brief introduction into the topics
 - [Supply chain attacks](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/supply-chain-malware) article by Microsoft.
 - [Open source maintainer pulls the plug on npm packages colors and faker](https://snyk.io/blog/open-source-npm-packages-colors-faker/)
 - [Alpine is evil](https://martinheinz.dev/blog/92), try [chainguard](https://github.com/chainguard-images)
+- [Imposter Commits in GitHub Actions](https://www.chainguard.dev/unchained/what-the-fork-imposter-commits-in-github-actions-and-ci-cd)
