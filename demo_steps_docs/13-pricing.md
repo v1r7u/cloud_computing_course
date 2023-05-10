@@ -29,23 +29,28 @@ The goal: pricing options, cost analysis
 
     - Expect one event-emitter to produce `1 event/10 seconds`, or `8640 events/day`
     - Expect `1000` event-emitters, or `8640*1000 events/day * 30 days` or `259200000 events/month`
-    - One event saved in blob takes `4 Kb`
+    - For each event there is _at least_ one ingestion and one read operation, thus, multiple Event Grid transactions by `2`.
+    - One event saved in Table Storage takes approximately `4 Kb`
     - Storage consumption: `8640*1000*4 Kb = 34.56 Gb/day` or `1036.8 Gb/month`
-    - Function is executed twice for each events: HTTP-to-eventhub + eventhub-to-storage
+    - Function is executed twice for each events: HTTP-to-eventgrid + eventgrid-to-storage
     - Rough estimation for the first month:
 
-    ![FaaS Calculator](../files/15-pricing/01-pricing-calculator.png)
+    ![FaaS Calculator](../files/13-pricing/01-pricing-calculator.png)
 
-    Based on the calculation most of the price goes to Storage Account writes (~1400usd), and Function consumption (~400usd). Probably, we can consider changing event-publish frequency, event-batching, reduce function execution duration
+    Based on the calculation most of the price goes to Event Grid (~300usd), and Function consumption (~500usd). Probably, we can consider 
+    - changing event-publish frequency,
+    - batching events,
+    - reduce function execution duration,
+    - replace Event Grid with another service.
 
 7. Cost-analysis and alerts
 
     - Cost-analysis helps to understand how you spent the money, for example you can group by resource-type and display daily spendings:
 
-    ![cost analysis by day](../files/15-pricing/02-pricing-cost-analysis.png)
+    ![cost analysis by day](../files/13-pricing/02-pricing-cost-analysis.png)
 
     - Create monthly budget and alerts on thresholds
 
-    ![create budget](../files/15-pricing/03-pricing-budget.png)
+    ![create budget](../files/13-pricing/03-pricing-budget.png)
 
-    ![create alerts](../files/15-pricing/04-pricing-alert.png)
+    ![create alerts](../files/13-pricing/04-pricing-alert.png)

@@ -4,7 +4,7 @@ The goal: show structured and plain-text logs, metrics and dashboards, all-in-on
 
 ## Prepare working environment
 
-1. Start kubernetes cluster: `minikube start -n 3`
+1. Start kubernetes cluster: `kind create cluster --config 14-kind.yaml`
 
 2. Login to azure `az login` and select Subscription `az account set -s $SUBSCRIPTION_ID`
 
@@ -22,15 +22,10 @@ terraform apply
 6. Parse terraform output to environment variables that will be picked up by azure-function locally:
 
 ```sh
-export AzureWebJobsStorage=$(terraform output -raw azure_web_jobs_storage)
-export eventsTopicEndpoint=$(terraform output -raw events_topic_endpoint)
-export eventsTopicKey=$(terraform output -raw events_topic_key)
-export StorageAccountConnectionString=$(terraform output -raw storage_account_connection_string)
-export storageAccountTableName=$(terraform output -raw storage_account_tablename)
 export FUNCTION_APP_NAME=$(terraform output -raw azure_function_name)
 ```
 
-## Deploy the function
+## Deploy and test the function
 
 1. Change working directory to function sources: `cd ../../az_func`
 
@@ -46,25 +41,26 @@ pip install -r requirements.txt
 
 4. Ingest events with load-generator tool `k6`
 
+    - get function key: `func azure functionapp list-functions $FUNCTION_APP_NAME --show-keys`
     - `cd src/load_generator`
     - Update `src/load_generator/script.js` with function URL from function-publish output or from Code+Test view at Azure Portal, for example: `https://cloudcomp-ex4f-func.azurewebsites.net/api/HttpToEventHub?code=Q3NoO2M4LmARBdh/nAcRe0Giaa0yKrVBMN6bbQQZ9ZaVxqyvBXRXKg==`
-    - test function: `docker run -i loadimpact/k6 run -d 2m - <script.js`
+    - test function: `docker run -i loadimpact/k6 run -d 1m - <script.js`
 
 ## Unstructured (plaintext) logs
 
 Review plain-text logs in kubernetes
 
-1. Get logs from a container: `kubectl logs kube-apiserver-minikube -n kube-system`
+1. Get logs from a container: `kubectl logs -n kube-system kube-apiserver-kind-control-plane`
 
 2. Filter logs:
 
-    - `kubectl logs kube-apiserver-minikube -n kube-system | grep 'url'`
-    - `kubectl logs kube-apiserver-minikube -n kube-system | grep 'url' | grep -v 'kindnet'`
+    - `kubectl logs -n kube-system kube-apiserver-kind-control-plane | grep failed`
+    - `kubectl logs -n kube-system kube-apiserver-kind-control-plane | grep failed | grep -v addrConn.createTransport`
 
 3. (Optional) the same filtering in k9s:
 
     - tail logs from `kindnet` daemon-set
-    - filter logs via `/ !current` or `/ minikube-m`
+    - filter logs via `/ !current` or `/ PriorityClass`
 
 ## Structured logs
 
@@ -90,7 +86,7 @@ Review structured logs in Azure Log Analytics
 
     1. Open Storage Account and click on Monitoring/Latency chart:
 
-    ![open Storage Account latency chart](../files/13-monitoring/01-storage-metrics.png)
+    ![open Storage Account latency chart](../files/14-monitoring/01-storage-metrics.png)
 
     2. Click on Success E2E Latency and change aggregation to `max`
 
@@ -98,15 +94,15 @@ Review structured logs in Azure Log Analytics
 
     4. Pin to a new dashboard
     
-    ![edit Storage Account chart](../files/13-monitoring/02-storage-metrics.png)
+    ![edit Storage Account chart](../files/14-monitoring/02-storage-metrics.png)
 
-2. Add Event Hub metrics to a dashboard:
+2. Add Event Grid metrics to a dashboard:
 
-    1. Open Event Hub `Messages` chart
+    1. Open Event Grid `Events` chart
 
-    ![open Event Hub messages chart](../files/13-monitoring/03-event-hub-metrics.png)
+    ![open Event Grid messages chart](../files/14-monitoring/03-event-grid-metrics.png)
     
-    2. Delete both `Captured Messages` metrics
+    2. Delete `Advanced Filter` metric
 
     3. Pin to existing `FaaS` dashboard
 
@@ -114,7 +110,7 @@ Review structured logs in Azure Log Analytics
 
     Open Application Insights and pin to `FaaS` dashboard request/responce charts:
     
-    ![pin AppInsights charts](../files/13-monitoring/04-app-insights-metrics.png)
+    ![pin AppInsights charts](../files/14-monitoring/04-app-insights-metrics.png)
 
 4. Edit dashboard:
 
@@ -124,7 +120,7 @@ Review structured logs in Azure Log Analytics
 
     3. Rename Charts if needed
     
-    ![final dashboard](../files/13-monitoring/05-dashboard.png)
+    ![final dashboard](../files/14-monitoring/05-dashboard.png)
 
 ## Function observability
 
@@ -134,7 +130,7 @@ Review structured logs in Azure Log Analytics
 
     Note, changing amount of servers and their load, telemetry flow, request duration and rates. Highlight, that when load-generator finishes - requests are still flowing.
 
-    ![App Insights live](../files/13-monitoring/06-appinsights-live.png)
+    ![App Insights live](../files/14-monitoring/06-appinsights-live.png)
 
 3. Open `Performance` tab:
 
@@ -143,7 +139,7 @@ Review structured logs in Azure Log Analytics
     3. Highlight Dependencies: Storage account is not shown there (because it's not instrumented)
     4. Show Roles: misc servers might have different performance
 
-    ![AppInsights performance](../files/13-monitoring/07-appinsights-performance.png)
+    ![AppInsights performance](../files/14-monitoring/07-appinsights-performance.png)
 
 4. Open `Failures` tab:
 
@@ -153,11 +149,11 @@ Review structured logs in Azure Log Analytics
     4. Exceptions: group by exception type
     5. Roles: group by server, filter by server
 
-    ![AppInsights failures](../files/13-monitoring/08-appinsights-failures.png)
+    ![AppInsights failures](../files/14-monitoring/08-appinsights-failures.png)
 
 5. Open `Logs` tab. Show built-in queries:
 
-    ![AppInsights logs](../files/13-monitoring/09-appinsights-logs.png)
+    ![AppInsights logs](../files/14-monitoring/09-appinsights-logs.png)
 
 6. Open `Usage and estimated costs` tab. If pricing goes mad - sample, change retention, set daily-cap.
 
@@ -171,7 +167,7 @@ Review structured logs in Azure Log Analytics
 
 3. Select operator `Greater than` with aggregation `Count`. Show how threshold and evaluation period changes outcome:
 
-    ![create alert signal](../files/13-monitoring/10-alert-signal.png)
+    ![create alert signal](../files/14-monitoring/10-alert-signal.png)
 
 4. Create Action group with email
 
@@ -183,7 +179,7 @@ Review structured logs in Azure Log Analytics
 
 8. Show alert in Azure Portal and email:
 
-    ![show alert notification](../files/13-monitoring/11-alert-notification.png)
+    ![show alert notification](../files/14-monitoring/11-alert-notification.png)
 
 ## Clean-up
 
@@ -191,4 +187,4 @@ Review structured logs in Azure Log Analytics
 
 2. Delete created cloud components: `terraform destroy`.
 
-3. Stop kubernetes cluster: `minikube stop`.
+3. Stop kubernetes cluster: `kind cluster delete`.

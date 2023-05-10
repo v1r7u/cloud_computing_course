@@ -12,8 +12,8 @@ The goal: show Azure Function is connections with other services
 
 4. Review proposed terraform configuration:
 
-  - Event Hub (e.g. azure-kafka)
-  - Storage Account as object store
+  - Event Grid
+  - Storage Account Table
   - FaaS itself integrated with two above
 
 5. Provision Azure components via terraform

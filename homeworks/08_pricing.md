@@ -8,7 +8,7 @@ As a side effect, during pricing estimation you often can better understand the 
 
 Document in project git-repository with
 
-- estimated target price for 1.000 HTTP function invocation per monthö
+- estimated target price for 1.000 HTTP function invocation per month
 - expected price for 100.000 and 10.000.000 invocations
 - conclusion:
     - what is the most expensive part of the project,

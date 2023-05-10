@@ -40,9 +40,7 @@ The goal: introduction into identity access management
 
 Kubernetes uses similar concepts but under slightly different names.
 
-Show all the following steps in minikube: `minikube start -n 2`
-
-NOTE: to use `podman` instead of `docker` as minikube driver, you must run sligtly different commands. The command could be similar to `minikube start --driver=podman --container-runtime=cri-o -n 2`. You could consider running rootless podman (minikube support for rootless is in beta and should be enabled separately `minikube config set rootless true`)
+Show all the following steps in [kind](https://kind.sigs.k8s.io/): `kind create cluster`.
 
 1. Kubernetes could integrate with external Auth-providers (for example, AAD)
 
@@ -90,4 +88,4 @@ NOTE: to use `podman` instead of `docker` as minikube driver, you must run sligt
 
     - [who-can](https://github.com/aquasecurity/kubectl-who-can),
     - [rbac-lookup](https://github.com/FairwindsOps/rbac-lookup), 
-    - or kubernetes IDEs ([k9s](https://github.com/derailed/k9s), [lens](https://github.com/lensapp/lens), [octant](https://github.com/vmware-tanzu/octant), etc)
+    - or kubernetes IDEs ([k9s](https://github.com/derailed/k9s), [lens](https://github.com/lensapp/lens))

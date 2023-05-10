@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Define variables
-SUBSCRIPTION_ID=72bd4a4b-1111-2222-3333-7f7f74260b75
-MY_CLOUD_PREFIX=cloud22
+SUBSCRIPTION_ID=2a10f2dc-21a6-48fd-aa63-bf79b600ba04
+MY_CLOUD_PREFIX=cloud23
 MY_CLOUD_LOCATION=westeurope
 
 PSQL_PASSWORD=$(openssl rand -base64 20)
