@@ -1,4 +1,4 @@
-FROM ubuntu:focal-20230308
+FROM ubuntu:jammy-20240111
 
 RUN apt-get -y update
 RUN apt-get -y install \
@@ -32,19 +32,19 @@ RUN apt-get -y install \
 # More details: https://github.com/Azure/azure-functions-core-tools/issues/2554
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-ARG TERRAFORM_VERSION=1.4.2
+ARG TERRAFORM_VERSION=1.7.1
 RUN curl -O https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin/ && \
     rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     terraform version
 
-ARG KUBECTL_VERSION=1.26.3
+ARG KUBECTL_VERSION=1.29.1
 RUN curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
     mv kubectl /usr/local/bin/ && \
     chmod a+x /usr/local/bin/kubectl && \
     kubectl version --client
 
-ARG KUBELOGIN_VERSION=0.0.28
+ARG KUBELOGIN_VERSION=0.1.0
 RUN curl -LO "https://github.com/Azure/kubelogin/releases/download/v${KUBELOGIN_VERSION}/kubelogin-linux-amd64.zip" && \
     unzip kubelogin-linux-amd64.zip && \
     mv bin/linux_amd64/kubelogin /usr/local/bin/kubelogin && \
