@@ -29,18 +29,24 @@ The goal: show main terraform commands and how to use templates from this reposi
 
     3. Create `terraform.tfvars` file. This file contains your unique properties for the rest of terraform configuration. You can use a sample generator script: `../generate_tfvars.sh`
 
-    4. Plan: `terraform plan`
+    4. Plan: `terraform plan -out whatiscloud.tfplan`
 
-    5. If you are happy with proposed plan, deploy the infrastructure: `terraform apply`. Browse resources in Azure portal after creation.
+    5. If you are happy with proposed plan, deploy the infrastructure: `terraform apply "whatiscloud.tfplan"`. Browse resources in Azure portal after creation.
 
     6. Check terraform state file
 
-    7. Change Storage account required TLS version and apply changes.
+        Highlight that state has sensitive data
 
-    Add `min_tls_version = "TLS1_2"` at line 21 in file `src/terraform/02-what-is-cloud`
+    7. Find created resources in Azure Portal
 
-    Run `terraform apply` and check the resource state at Azure Portal.
+    8. Change Storage account required TLS version and apply changes.
 
-    8. Open ***Activity Log*** at Azure Portal and find your requests details there.
+        Add `min_tls_version = "TLS1_2"` at line 21 in file `src/terraform/02-what-is-cloud`
 
-    9. Clean up created resources: `terraform destroy`
+        Alternatively to running plan and apply in separate commands, it is possible to execute just `terraform apply`
+
+        Check the resource state at Azure Portal.
+
+    9. Try changing the `prefix` variable and then plan: `terraform plan`
+
+    10. Clean up created resources: `terraform destroy`
