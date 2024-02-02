@@ -42,13 +42,14 @@ export PUBLIC_VM_IP=$(terraform output -raw public_vm_ip)
 export PRIVATE_PSQL_HOSTNAME=$(terraform output -raw private_psql_hostname)
 export PUBLIC_PSQL_HOSTNAME=$(terraform output -raw public_psql_hostname)
 export PSQL_ADMIN=$(terraform output -raw psql_admin_name)
+export PSQL_PASS=$(terraform output -raw psql_password)
 ```
 
 ### Perform tests
 
 To perform tests, you have to connect to each vm with corresponding commands
-- `ssh -t -i ~/id_psql_test adminuser@$PRIVATE_VM_IP PSQL_HOSTNAME=$PRIVATE_PSQL_HOSTNAME PSQL_ADMIN=$PSQL_ADMIN bash -l`
-- `ssh -t -i ~/id_psql_test adminuser@$PUBLIC_VM_IP PSQL_HOSTNAME=$PUBLIC_PSQL_HOSTNAME PSQL_ADMIN=$PSQL_ADMIN bash -l`
+- `ssh -t -i ~/id_psql_test adminuser@$PRIVATE_VM_IP PSQL_HOSTNAME=$PRIVATE_PSQL_HOSTNAME PSQL_ADMIN=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l`
+- `ssh -t -i ~/id_psql_test adminuser@$PUBLIC_VM_IP PSQL_HOSTNAME=$PUBLIC_PSQL_HOSTNAME PSQL_ADMIN=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l`
 
 Once you are connected to a VM run the commands:
 

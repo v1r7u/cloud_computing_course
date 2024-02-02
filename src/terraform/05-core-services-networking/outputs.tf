@@ -24,6 +24,11 @@ output "public_psql_hostname" {
 }
 
 output "psql_admin_name" {
-  value = var.psql_admin
+  value = module.vm_psql_net.psql_admin
+  sensitive = true
+}
+
+output "psql_password" {
+  value = module.vm_psql_net.psql_password
   sensitive = true
 }

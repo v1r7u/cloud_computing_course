@@ -41,8 +41,6 @@ module "vm_psql_net" {
   prefix   = var.prefix
   location = var.location
 
-  psql_admin        = var.psql_admin
-  psql_password     = var.psql_password
   psql_storage_size = var.psql_storage_size
   psql_sku          = var.psql_sku
 

@@ -6,14 +6,6 @@ variable "location" {
   description = "The Azure Region in which all resources in this example should be created."
 }
 
-variable "psql_admin" {
-  description = "PSQL admin name"
-}
-
-variable "psql_password" {
-  description = "PSQL admin password"
-}
-
 variable "log_analytics_workspace_id" {
   description = "Log Analytics Workspace Identifier"
 }

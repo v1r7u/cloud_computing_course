@@ -22,3 +22,13 @@ output "public_psql_hostname" {
   value = azurerm_postgresql_flexible_server.public.name
   sensitive = true
 }
+
+output "psql_admin" {
+  value = random_pet.psql_admin.id
+  sensitive = true
+}
+
+output "psql_password" {
+  value = random_password.psql_password.result
+  sensitive = true
+}

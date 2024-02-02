@@ -10,14 +10,6 @@ variable "location" {
   description = "The Azure Region in which all resources in this example should be created."
 }
 
-variable "psql_admin" {
-  description = "PSQL admin name"
-}
-
-variable "psql_password" {
-  description = "PSQL admin password"
-}
-
 variable "psql_storage_size" {
   description = "Storage size in Mb"
   default     = 32768

@@ -5,8 +5,8 @@ resource "azurerm_postgresql_flexible_server" "public" {
   version                = "16"
   storage_mb             = var.psql_storage_size
   sku_name               = var.psql_sku
-  administrator_login    = var.psql_admin
-  administrator_password = var.psql_password
+  administrator_login    = random_pet.psql_admin.id
+  administrator_password = random_password.psql_password.result
   backup_retention_days  = 7
 
   tags = {
