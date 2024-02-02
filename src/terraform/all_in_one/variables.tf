@@ -20,12 +20,12 @@ variable "psql_password" {
 
 variable "psql_storage_size" {
   description = "Storage size in Mb"
-  default     = 102400
+  default     = 32768
 }
 
 variable "psql_sku" {
   description = "PSQL sku"
-  default     = "GP_Gen5_2"
+  default     = "GP_Standard_D4ds_v4"
 }
 
 variable "vm_size" {

@@ -14,11 +14,11 @@ output "public_vm_ip" {
 }
 
 output "private_psql_hostname" { 
-  value = azurerm_postgresql_server.private.name
+  value = azurerm_postgresql_flexible_server.private.name
   sensitive = true
 }
 
 output "public_psql_hostname" { 
-  value = azurerm_postgresql_server.public.name
+  value = azurerm_postgresql_flexible_server.public.name
   sensitive = true
 }
