@@ -16,10 +16,6 @@ At the moment, all the demo materials are focused on Azure Cloud as an example.
 - `homeworks`: homework description and grading;
 - `src`: terraform configuration and source-code to provision required infrastructure.
 
-## Presentations
-
-Slides are available at [OneDrive](https://1drv.ms/u/s!AmQmd11jftp0hb5PeOb7ei4j4PW2Mw?e=2aAcV1).
-
 ## Demos
 
 1. What is Cloud. [Azure cloud: web interface](demo_steps_docs/01-what-is-cloud_cloud-gui.md).
