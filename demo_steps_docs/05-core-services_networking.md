@@ -48,22 +48,40 @@ export PSQL_PASS=$(terraform output -raw psql_password)
 ### Perform tests
 
 To perform tests, you have to connect to each vm with corresponding commands
-- `ssh -t -i ~/id_psql_test adminuser@$PRIVATE_VM_IP PSQL_HOSTNAME=$PRIVATE_PSQL_HOSTNAME PSQL_ADMIN=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l`
-- `ssh -t -i ~/id_psql_test adminuser@$PUBLIC_VM_IP PSQL_HOSTNAME=$PUBLIC_PSQL_HOSTNAME PSQL_ADMIN=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l`
+- `ssh -t -i ~/id_psql_test adminuser@$PRIVATE_VM_IP PSQL_HOSTNAME=$PRIVATE_PSQL_HOSTNAME PGUSER=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l`
+- `ssh -t -i ~/id_psql_test adminuser@$PUBLIC_VM_IP PSQL_HOSTNAME=$PUBLIC_PSQL_HOSTNAME PGUSER=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l`
 
 Once you are connected to a VM run the commands:
 
 ```sh
 sudo apt update && sudo apt upgrade -y && sudo apt-get install -y postgresql-client postgresql-contrib
 
-pgbench -i "host=$PSQL_HOSTNAME.postgres.database.azure.com port=5432 dbname=exampledb user=$PSQL_ADMIN@$PSQL_HOSTNAME sslmode=require"
+pgbench -i "host=$PSQL_HOSTNAME.postgres.database.azure.com port=5432 dbname=exampledb sslmode=require"
 
 # 3 client, 60 seconds, run transactional commands
-pgbench "host=$PSQL_HOSTNAME.postgres.database.azure.com port=5432 dbname=exampledb user=$PSQL_ADMIN@$PSQL_HOSTNAME sslmode=require" -c 3 -T 60
+pgbench "host=$PSQL_HOSTNAME.postgres.database.azure.com port=5432 dbname=exampledb sslmode=require" -c 3 -T 60
 
 # 3 client, 60 seconds, select-only
-pgbench "host=$PSQL_HOSTNAME.postgres.database.azure.com port=5432 dbname=exampledb user=$PSQL_ADMIN@$PSQL_HOSTNAME sslmode=require" -c 3 -T 60 -S
+pgbench "host=$PSQL_HOSTNAME.postgres.database.azure.com port=5432 dbname=exampledb sslmode=require" -c 3 -T 60 -S
 ```
+
+Test connecting:
+- from "private VM" to "public psql"
+  ```sh
+    ssh -t -i ~/id_psql_test adminuser@$PRIVATE_VM_IP PSQL_HOSTNAME=$PUBLIC_PSQL_HOSTNAME PGUSER=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l
+
+    host=$PSQL_HOSTNAME.postgres.database.azure.com
+    echo $host
+    pgbench -i "host=$host port=5432 dbname=exampledb sslmode=require"
+  ```
+- from "public VM" to "private psql"
+  ```sh
+    ssh -t -i ~/id_psql_test adminuser@$PUBLIC_VM_IP PSQL_HOSTNAME=$PRIVATE_PSQL_HOSTNAME PGUSER=$PSQL_ADMIN PGPASSWORD=$PSQL_PASS bash -l
+
+    host=$PSQL_HOSTNAME.postgres.database.azure.com
+    echo $host
+    pgbench -i "host=$host port=5432 dbname=exampledb sslmode=require"
+  ```
 
 ### Check results
 
