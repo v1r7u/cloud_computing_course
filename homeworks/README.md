@@ -10,8 +10,9 @@ Additionally, we will evaluate project security, financial sustainability, obser
 
 ## Homework requirements
 
-- Each student maintains a git repository with completed tasks (code, docs, images)
-- You can pick any cloud platform of your choice
+- Each student maintains a private git repository with completed tasks (code, docs, images)
+- Each task should be delivered as a Pull Request (PR). After course stuff has approved the PR, it could be merged into the main branch.
+- You can pick **any cloud platform of your choice**
 
 ## List of tasks
 
