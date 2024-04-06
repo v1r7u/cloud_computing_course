@@ -4,6 +4,8 @@ resource "azurerm_linux_virtual_machine" "private" {
   location                        = azurerm_resource_group.main.location
   size                            = var.vm_size
   admin_username                  = "adminuser"
+  disable_password_authentication = true
+  
   network_interface_ids = [
     azurerm_network_interface.vm_private.id
   ]

@@ -14,5 +14,5 @@ resource "random_pet" "psql_admin" {
 
 resource "random_password" "psql_password" {
   length           = 24
-  override_special = "!$"
+  override_special = "!"
 }

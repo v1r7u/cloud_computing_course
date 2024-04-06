@@ -1,6 +1,6 @@
 # 3. (20 pt) Terraform configuration for the project
 
-**The goal**: Terraform the project!
+**The goal**: Terraform the project.
 
 The project consist of several cloud components that have to be configured to play nicely together. Describe in terraform configuration of all the used cloud components: FaaS, Object Store, Event Stream, and their supplementary resources if needed.
 
