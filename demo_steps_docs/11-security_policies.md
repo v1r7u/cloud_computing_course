@@ -16,13 +16,13 @@ The goal: introduction into policies management
     - review and history
     - easier to ensure policies compliance
 
-4. (Almost) each cloud has built-in policy-engines. (Almost) each tool/framework has own policy-engine. There are also open source solutions, for example, [Open Policy Agent](https://www.openpolicyagent.org/), [Checkov](https://github.com/bridgecrewio/checkov), [Polaris](https://github.com/FairwindsOps/polaris) to name a few.
+4. (Almost) each cloud has built-in policy-engines. (Almost) each tool/framework has own policy-engine. There are also open source solutions, for example, [Open Policy Agent](https://www.openpolicyagent.org/), [Checkov](https://github.com/bridgecrewio/checkov), [Polaris](https://github.com/FairwindsOps/polaris), [kyverno](https://kyverno.io/) to name a few.
 
 5. You can verify your configuration before release (as a part of ci/cd process or Pull-Request review process) or even in runtime.
 
 6. For example, to scan terraform configuration in this repository with checkov
 
 ```sh
-ABSOLUTE_PATH_TO_TF=/home/cloudcomp/cloud_computing_course/src/terraform
-docker run --volume $ABSOLUTE_PATH_TO_TF:/tf bridgecrew/checkov:2.3.199 --quiet --compact --directory /tf
+ABSOLUTE_PATH_TO_TF=/workspaces/cloud_computing_course/src/terraform
+docker run --volume $ABSOLUTE_PATH_TO_TF:/tf bridgecrew/checkov:3.2.63 --quiet --compact --directory /tf
 ```

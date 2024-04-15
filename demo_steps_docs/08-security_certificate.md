@@ -5,7 +5,7 @@ The goal: inspect real certificates content, generate a sample one
 1. Certificates are used to identify an Entity. To prove the identification, there is a certificate chain: leaf, intermediate, and root certs.
 
     - open any website and show certificate: subject, alternative names, valid to/from, trust-chain
-    - get certificate from terminal and compare : `echo | openssl s_client -servername github.com -connect github.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > certificate.crt` OR `openssl s_client -showcerts -connect github.com:443`
+    - get certificate from terminal and compare : `echo | openssl s_client -servername github.com -connect github.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > certificate.pem` OR `openssl s_client -showcerts -connect github.com:443`
 
     By default, your browser accepts certificates that have trusted Certificate Authority in its trust-chain. You can _trust_ other authoirities too, but you have to add them to truststore first.
 
@@ -16,8 +16,8 @@ The goal: inspect real certificates content, generate a sample one
 2. Create a sample Certificate Authority and sign a certificate.
 
 ```sh
-# root certificate:
-openssl genrsa -out root.key 2048
+# root certificate with RSA key
+openssl genpkey -algorithm RSA -out root.key -pkeyopt rsa_keygen_bits:3072
 
 openssl req -x509  -new -nodes \
     -key root.key \
@@ -28,8 +28,10 @@ openssl req -x509  -new -nodes \
 # to read certificate content:
 openssl x509 -text -noout -in root.pem
 
-# leaf private key
-openssl genrsa -out leaf.key 2048
+# leaf private key with EC (Elliptic Curve) Key
+# note, length of the key is significantly shorter, but offers the same cryptographic strength
+# it is also  more efficient in terms of computation, storage, and bandwidth
+openssl genpkey -algorithm EC -out leaf.key -pkeyopt ec_paramgen_curve:prime256v1
 
 # leaf certificate request which could be sent to CA for signing
 openssl req -new -key leaf.key \
@@ -44,16 +46,19 @@ openssl x509 -req \
     -CA root.pem \
     -CAkey root.key \
     -CAcreateserial \
-    -out leaf.crt \
+    -out leaf.pem \
     -days 365 \
     -extfile \
     <(echo "[server_ext]"; echo "extendedKeyUsage=serverAuth,clientAuth"; echo "subjectAltName=DNS.1:example.com,DNS.2:*.example.com")
 
-openssl x509 -text -noout -in leaf.crt
+openssl x509 -text -noout -in leaf.pem
 
-# check hashes
-openssl x509 -in leaf.crt -noout -hash -issuer_hash
+# check subject (!) hashes
+openssl x509 -in leaf.pem -noout -hash -issuer_hash
 openssl x509 -in root.pem -noout -hash -issuer_hash
+
+# verify if certificate is signed by given CA
+openssl verify -CAfile root.pem leaf.pem
 ```
 
 ## Further reading:

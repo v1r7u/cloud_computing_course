@@ -19,7 +19,7 @@ Disclaimer: the following section give only a brief introduction into the topics
 4. One of popular _scanners_ is [trivy](https://github.com/aquasecurity/trivy). You can install it to your machine or run inside a container, for example:
 
     ```sh
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image python:3.9
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.50.1 image python:3.12
     ```
 
     Discalimer: there are a lot of other free and commercial scanners: [Clair](https://github.com/quay/clair), [anchore/grype](https://github.com/anchore/grype), [snyk](https://snyk.io/product/container-vulnerability-management/) to name a few.
@@ -29,12 +29,12 @@ Disclaimer: the following section give only a brief introduction into the topics
 5. You can include image-scanning as gate before pushing an image to Container Registry. thus, if container has a known vulnerability - image is not released:
 
     ```sh
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.50.1 image --exit-code 1 --no-progress python:3.12
 
     # get exit-code of last command
     echo $?
 
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress alpine:latest
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.50.1 image --exit-code 1 --no-progress alpine:latest
 
     echo $?
     ```
@@ -45,28 +45,28 @@ Disclaimer: the following section give only a brief introduction into the topics
 
     ```sh
     ### buster
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.50.1 image --exit-code 1 --no-progress python:3.12
 
-    python:3.9 (debian 10.9)
-    ========================
-    Total: 1729 (UNKNOWN: 0, LOW: 1119, MEDIUM: 335, HIGH: 214, CRITICAL: 61)
+    python:3.12 (debian 12.5)
+    =========================
+    Total: 988 (UNKNOWN: 5, LOW: 525, MEDIUM: 350, HIGH: 103, CRITICAL: 5)
     ```
 
     ```sh
     ### buster-slim
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9-slim
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.50.1 image --exit-code 1 --no-progress python:3.12-slim
 
-    python:3.9-slim (debian 10.9)
-    =============================
-    Total: 109 (UNKNOWN: 1, LOW: 74, MEDIUM: 11, HIGH: 21, CRITICAL: 2)
+    python:3.12-slim (debian 12.5)
+    ==============================
+    Total: 116 (UNKNOWN: 0, LOW: 71, MEDIUM: 33, HIGH: 11, CRITICAL: 1)
     ```
 
     ```sh
     ### alpine
-    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.40.0 image --exit-code 1 --no-progress python:3.9-alpine
+    docker run --rm -v ~/.trivy:/root/.cache/ aquasec/trivy:0.50.1 image --exit-code 1 --no-progress python:3.12-alpine
 
-    python:3.9-alpine (alpine 3.13.5)
-    =================================
+    python:3.12-alpine (alpine 3.19.1)
+    ==================================
     Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
     ```
 
@@ -74,10 +74,10 @@ Disclaimer: the following section give only a brief introduction into the topics
 
     ```sh
     $ docker images python
-    REPOSITORY   TAG          IMAGE ID       CREATED       SIZE
-    python       3.9-slim     afaa64e7c7fe   11 days ago   115MB
-    python       3.9          a6a0779c5fb2   11 days ago   886MB
-    python       3.9-alpine   95795c6eb47f   2 weeks ago   44.9MB
+    REPOSITORY   TAG           IMAGE ID       CREATED      SIZE
+    python       3.12          099bf23b94d9   6 days ago   1.02GB
+    python       3.12-slim     0e42464fe231   6 days ago   130MB
+    python       3.12-alpine   f44387b48281   6 days ago   57.1MB
     ```
 
 ## Software supply-chain protection
@@ -106,16 +106,16 @@ Disclaimer: the following section give only a brief introduction into the topics
 
     ```sh
     # run image using mutable tag:
-    docker run -it --rm python:3.9
+    docker run -it --rm python:3.12
 
     # find image immutable digest:
-    docker inspect --format='{{index .RepoDigests 0}}' python:3.9
+    docker inspect --format='{{index .RepoDigests 0}}' python:3.12
     # or
     docker images --digests
 
     # run image by digest instaed of tag:
     # NOTE: likely, at the moment the hash is different, e.g. someone pushed a new image with the same 3.9 tag
-    docker run -it --rm python@sha256:f265c5096aa52bdd478d2a5ed097727f51721fda20686523ab1b3038cc7d6417
+    docker run -it --rm python@sha256:e0e2713ebf0f7b114b8bf9fbcaba9a69ef80e996b9bb3fa5837e42c779dcdc0f
     ```
 
 ## Summary
@@ -130,7 +130,6 @@ Disclaimer: the following section give only a brief introduction into the topics
 ## Further reading
 
 - [How to Spoof Any User on Github…and What to Do to Prevent It](https://blog.gruntwork.io/how-to-spoof-any-user-on-github-and-what-to-do-to-prevent-it-e237e95b8deb).
-- [Supply chain attacks](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/supply-chain-malware) article by Microsoft.
 - [Open source maintainer pulls the plug on npm packages colors and faker](https://snyk.io/blog/open-source-npm-packages-colors-faker/)
 - [Alpine is evil](https://martinheinz.dev/blog/92), try [chainguard](https://github.com/chainguard-images)
 - [Imposter Commits in GitHub Actions](https://www.chainguard.dev/unchained/what-the-fork-imposter-commits-in-github-actions-and-ci-cd)
