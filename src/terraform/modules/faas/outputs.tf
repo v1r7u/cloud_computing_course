@@ -24,6 +24,6 @@ output "storage_account_tablename" {
 }
 
 output "azure_function_name" { 
-  value = azurerm_function_app.faas.name
+  value = azurerm_linux_function_app.faas.name
   sensitive = true
 }

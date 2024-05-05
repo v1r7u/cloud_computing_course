@@ -15,7 +15,7 @@ resource "azurerm_eventgrid_event_subscription" "events" {
   scope = azurerm_eventgrid_topic.events.id
 
   azure_function_endpoint {
-    function_id           = "${azurerm_function_app.faas.id}/functions/EventGridToTable"
+    function_id           = "${azurerm_linux_function_app.faas.id}/functions/EventGridToTable"
     max_events_per_batch  = 1
   }
 

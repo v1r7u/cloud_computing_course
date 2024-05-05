@@ -26,7 +26,7 @@ RUN echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu
 RUN apt-get -y update
 RUN apt-get -y install \
     python3-venv \
-    azure-functions-core-tools-3
+    azure-functions-core-tools-4
 
 # Without this env variable, `func` fails to run any command.
 # More details: https://github.com/Azure/azure-functions-core-tools/issues/2554
