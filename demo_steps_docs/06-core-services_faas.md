@@ -12,16 +12,18 @@ The goal: show Azure Function is connections with other services
 
 4. Review proposed terraform configuration:
 
-  - Event Grid
-  - Storage Account Table
-  - FaaS itself integrated with two above
+    - Event Grid
+    - Storage Account Table
+    - FaaS itself integrated with two above
 
 5. Provision Azure components via terraform
 
-```sh
-terraform init
-terraform apply
-```
+    ```sh
+    terraform init
+    terraform apply
+    ```
+
+    Disclaimer: current terraform config cannot complete event-grid subscription, as it will require deployed function. Check "Deploy Function" section and then rerun `terraform apply`
 
 6. Parse terraform output to environment variables that will be picked up by azure-function locally:
 
@@ -46,13 +48,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Run locally
+3. Deploy function to Azure: `func azure functionapp publish $FUNCTION_APP_NAME --python`. Note, it takes _some time_ to finish the process.
+
+4. Run locally
 
     1. Run the application: `func start --python`.
 
     2. Insert events **from another terminal**: `echo $(date) | xargs -I{} curl -d '{"name":"the first", "time":"{}"}' -X POST http://localhost:7071/api/HttpToEventGrid`.
-
-4. Deploy function to Azure: `func azure functionapp publish $FUNCTION_APP_NAME --python`. Note, it takes _some time_ to finish the process.
 
 5. Ingest events
 

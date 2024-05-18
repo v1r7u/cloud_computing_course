@@ -25,21 +25,13 @@ terraform apply
 export FUNCTION_APP_NAME=$(terraform output -raw azure_function_name)
 ```
 
-## Deploy and test the function
+## run the function
 
-1. Change working directory to function sources: `cd ../../az_func`
+1. Discuss the function demo architecture
 
-2. Create and activate virtual environment
+    ![alt text](../files/14-monitoring/00_func_architecture.png)
 
-```sh
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-3. Deploy function to Azure: `func azure functionapp publish $FUNCTION_APP_NAME --python`. Note, it takes _some time_ to finish the process.
-
-4. Ingest events with load-generator tool `k6`
+2. Ingest events with load-generator tool `k6`
 
     - get function key: `func azure functionapp list-functions $FUNCTION_APP_NAME --show-keys`
     - `cd src/load_generator`
